@@ -1,3 +1,5 @@
 *.txt
 *.dat
-gopass
+gopass*
+*.sh
+__*

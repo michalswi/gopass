@@ -82,7 +82,6 @@ func checkArgs() (string, string, string, string) {
 
 	// specified encryption/decryption
 	if len(os.Args) == 6 {
-		fmt.Println(os.Args)
 		if os.Args[1] == "-e" && os.Args[4] == "-ef" || os.Args[1] == "--encrypt" && os.Args[4] == "-ef" {
 			return os.Args[2], os.Args[3], os.Args[5], ""
 		}
