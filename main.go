@@ -11,45 +11,54 @@ import (
 )
 
 func init() {
-	flag.StringVar(&encFile, "ef", "encrypted.dat", "Encrypted filename (+location)")
-	flag.StringVar(&decFile, "df", "decrypted.dat", "Decrypted filename (+location)")
+	flag.BoolVar(&generate, "g", false, "Generate 32-bytes secret key.")
+	flag.BoolVar(&generate, "generate", false, "Generate 32-bytes secret key.")
 	flag.StringVar(&encrypt, "e", "", "Encrypt the input file")
 	flag.StringVar(&encrypt, "encrypt", "", "Encrypt the input file")
 	flag.StringVar(&decrypt, "d", "", "Decrypt the input file")
 	flag.StringVar(&decrypt, "decrypt", "", "Decrypt the input file")
-	flag.BoolVar(&generate, "g", false, "Generate 32-bytes secret key.")
-	flag.BoolVar(&generate, "generate", false, "Generate 32-bytes secret key.")
+	flag.StringVar(&encFile, "ef", "encrypted.dat", "Encrypted filename (+location)")
+	flag.StringVar(&decFile, "df", "decrypted.dat", "Decrypted filename (+location)")
 
 	flag.Usage = func() {
 		h := []string{
 			"",
 			"Encrypt or decrypt a file using AES with a 256-bit key file.",
 			"Secret key should be 32-bytes long.",
-
+			"",
+			"FLAGS:",
+			"  -h, --help 						Show this help text",
+			"  -g, --generate 					Generate 32-bytes secret key",
+			"  -e, --encrypt <secret_key> <raw_data_file>		Encrypt data using secret key. Output to STDOUT",
+			"  -d, --decrypt <secret_key> <encrypted_data_file>	Decrypt encrypted data using secret key. Output to STDOUT",
+			"  -ef <encrypted_data_file> 				Encrypted filename (+location)",
+			"  -df <decrypted_data_file>				Decrypted filename (+location)",
 			"",
 			"USAGE:",
 			"  gopass [-h|--help]",
 			"",
 			"  > Generate 32-bytes secret key",
-			"  gopass [-g|--generate]",
+			"  $ gopass [-g|--generate]",
 			"",
-			"  > Encrypt data file using secret key. Default encrypted data file - encrypted.dat",
-			"  gopass [-e|--encrypt] <secret_key> <data_file>",
-			"  gopass -e my32byteslongsecret data.txt",
-			"  > Decrypt encrypted data file using secret key. Default decrypted data file - decrypted.dat",
-			"  gopass [-d|--decrypt] <secret_key> <encrypted_data_file>",
-			"  gopass -d mysecret encrypted.dat",
+			"  > Encrypt data file using secret key.",
+			"  Default encrypted data file - encrypted.dat",
+			"  $ gopass [-e|--encrypt] <secret_key> <data_file>",
+			"  $ gopass -e my32byteslongsecret data.txt",
 			"",
-			"  > Encrypt data file using secret key. Provide location + filename where to save encrypted data file",
-			"  gopass [-e|--encrypt] <secret_key> <data_file> -ef <encrypted_data_file>",
-			"  gopass -e my32byteslongsecret data.txt -ef /tmp/encrypted.dat",
-			"  > Decrypt encrypted data file (provide location + filename) using secret key. Provide location + filename where to save decrypted data file",
-			"  gopass [-d|--decrypt] <secret_key> <encrypted_data_file> -df <decrypted_data_file>",
-			"  gopass -d mysecret /tmp/encrypted.dat -df /tmp/decrypted.dat",
+			"  > Decrypt encrypted data file using secret key.",
+			"  Default decrypted data file - decrypted.dat",
+			"  $ gopass [-d|--decrypt] <secret_key> <encrypted_data_file>",
+			"  $ gopass -d mysecret encrypted.dat",
 			"",
-			"FLAGS:",
-			"  -e, --encrypt <secret_key> <raw_data_file>		Encrypt data using secret key. Output to STDOUT",
-			"  -d, --decrypt <secret_key> <encrypted_data_file>	Decrypt encrypted data using secret key. Output to STDOUT",
+			"  > Encrypt data file using secret key.",
+			"  Provide location + filename where to save encrypted data file",
+			"  $ gopass [-e|--encrypt] <secret_key> <data_file> -ef <encrypted_data_file>",
+			"  $ gopass -e my32byteslongsecret data.txt -ef /tmp/encrypted.dat",
+			"",
+			"  > Decrypt encrypted data file (provide location + filename) using secret key.",
+			"  Provide location + filename where to save decrypted data file",
+			"  $ gopass [-d|--decrypt] <secret_key> <encrypted_data_file> -df <decrypted_data_file>",
+			"  $ gopass -d mysecret /tmp/encrypted.dat -df /tmp/decrypted.dat",
 			"",
 		}
 		ShowBanner()
