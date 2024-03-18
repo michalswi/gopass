@@ -6,15 +6,12 @@ import (
 	"github.com/michalswi/color"
 )
 
-const (
-	Version = "v0.1.0"
-	banner  = `
+var banner = `
 ┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐
 │ ┬│ │├─┘├─┤└─┐└─┐
 └─┘└─┘┴  ┴ ┴└─┘└─┘
-	` + Version + ` - @michalswi
+	` + version + ` - @michalswi
 `
-)
 
 func ShowBanner() {
 	fmt.Printf("%s", color.Format(color.BLUE, banner))

@@ -5,6 +5,8 @@ import (
 	"os"
 )
 
+var version = "v0.2.0"
+
 var (
 	encFile, decFile    string
 	encrypt, decrypt    string
