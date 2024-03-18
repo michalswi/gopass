@@ -111,7 +111,7 @@ func main() {
 		}
 		ShowBanner()
 		fmt.Println()
-		fmt.Println(color.Format(color.GREEN, fmt.Sprintf("secret key: %x", base64.StdEncoding.EncodeToString(secret[:24]))))
+		fmt.Println(color.Format(color.GREEN, fmt.Sprintf("secret: %s", base64.StdEncoding.EncodeToString(secret[:24]))))
 		os.Exit(0)
 	}
 

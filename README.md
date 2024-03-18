@@ -77,22 +77,43 @@ Thu Mar 14 12:44:19 CET 2024
 
 # generate secret key
 
-$ ./gopass -g
+$ gopass -g
 
 ┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐
 │ ┬│ │├─┘├─┤└─┐└─┐
 └─┘└─┘┴  ┴ ┴└─┘└─┘
 	v0.1.0 - @michalswi
 
-secret key: rlJnWAUs/r+39mvTzewehlJJ+hDUEwV9
+secret: r10jNonOY5gHOESvbig1Wpkb5baSoKyZ
 
 
 # encrypt data
 
-todo
+$ gopass -e r10jNonOY5gHOESvbig1Wpkb5baSoKyZ data.txt
+
+┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐
+│ ┬│ │├─┘├─┤└─┐└─┐
+└─┘└─┘┴  ┴ ┴└─┘└─┘
+	v0.1.0 - @michalswi
+
+Encrypting data.
+Encrypted file: 'encrypted.dat'.
 
 
 # decrypt data
 
-todo
+$ gopass -d r10jNonOY5gHOESvbig1Wpkb5baSoKyZ encrypted.dat
+
+┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐
+│ ┬│ │├─┘├─┤└─┐└─┐
+└─┘└─┘┴  ┴ ┴└─┘└─┘
+	v0.1.0 - @michalswi
+
+Decrypting data.
+Decrypted file: 'decrypted.dat'.
+
+$ cat decrypted.dat
+Thu Mar 14 12:44:18 CET 2024
+Thu Mar 14 12:44:19 CET 2024
+Thu Mar 14 12:44:19 CET 2024
 ```
