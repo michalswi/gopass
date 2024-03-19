@@ -10,8 +10,8 @@ help:
 
 build_mac: ## Build for mac
 	CGO_ENABLED=0 go build -a -ldflags "-s -w -X 'main.Version=v$(APP_VERSION)'" -o gopass_macos_arm64
-	sha256sum gopass_macos_arm64 >> gopass_macos_arm64.sha256
+	sha256sum gopass_macos_arm64 > gopass_macos_arm64.sha256
 	
 build_linux: ## Build for linux
 	GOOS=linux GOARCH=amd64 go build -a -ldflags "-s -w -X 'main.Version=v$(APP_VERSION)'" -o gopass_linux_amd64
-	sha256sum gopass_linux_amd64 >> gopass_linux_amd64.sha256
+	sha256sum gopass_linux_amd64 > gopass_linux_amd64.sha256
