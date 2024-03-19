@@ -82,3 +82,10 @@ Thu Mar 14 12:44:18 CET 2024
 Thu Mar 14 12:44:19 CET 2024
 Thu Mar 14 12:44:19 CET 2024
 ```
+
+### \# warning
+
+Keep in mind that secret key written in console can be later on read from:
+```
+$ cat ~/.*_history
+```
