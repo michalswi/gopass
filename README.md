@@ -4,8 +4,9 @@
 ![](https://img.shields.io/github/forks/michalswi/gopass)
 ![](https://img.shields.io/github/stars/michalswi/gopass)
 ![](https://img.shields.io/github/last-commit/michalswi/gopass)
+![](https://img.shields.io/github/release/michalswi/gopass)
 
-Simple key password store.
+Simple go data/password encryptor.
 
 ### \# requirements
 
