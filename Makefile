@@ -1,5 +1,5 @@
 GOLANG_VERSION := 1.22.1
-APP_VERSION := 0.2.0
+APP_VERSION := 0.2.1
 
 .DEFAULT_GOAL := help
 .PHONY: build_mac build_linux
@@ -10,6 +10,8 @@ help:
 
 build_mac: ## Build for mac
 	CGO_ENABLED=0 go build -a -ldflags "-s -w -X 'main.Version=v$(APP_VERSION)'" -o gopass_macos_arm64
+	sha256sum gopass_macos_arm64 >> gopass_macos_arm64.sha256
 	
 build_linux: ## Build for linux
 	GOOS=linux GOARCH=amd64 go build -a -ldflags "-s -w -X 'main.Version=v$(APP_VERSION)'" -o gopass_linux_amd64
+	sha256sum gopass_linux_amd64 >> gopass_linux_amd64.sha256

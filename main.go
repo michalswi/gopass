@@ -11,6 +11,8 @@ import (
 )
 
 func init() {
+	flag.BoolVar(&appVersion, "v", false, "Display gopass version")
+	flag.BoolVar(&appVersion, "version", false, "Display gopass version")
 	flag.BoolVar(&generate, "g", false, "Generate 32-bytes secret key.")
 	flag.BoolVar(&generate, "generate", false, "Generate 32-bytes secret key.")
 	flag.StringVar(&encrypt, "e", "", "Encrypt the input file")
@@ -27,15 +29,17 @@ func init() {
 			"Secret key should be 32-bytes long.",
 			"",
 			"FLAGS:",
-			"  -h, --help 						Show this help text",
-			"  -g, --generate 					Generate 32-bytes secret key",
-			"  -e, --encrypt <secret_key> <raw_data_file>		Encrypt data using secret key. Output to STDOUT",
-			"  -d, --decrypt <secret_key> <encrypted_data_file>	Decrypt encrypted data using secret key. Output to STDOUT",
-			"  -ef <encrypted_data_file> 				Encrypted filename (+location)",
-			"  -df <decrypted_data_file>				Decrypted filename (+location)",
+			"  -h, --help 						show this help text",
+			"  -v, --version 					show gopass version",
+			"  -g, --generate 					generate 32-bytes secret key",
+			"  -e, --encrypt <secret_key> <raw_data_file>		encrypt data using secret key. Output to STDOUT",
+			"  -d, --decrypt <secret_key> <encrypted_data_file>	decrypt encrypted data using secret key. Output to STDOUT",
+			"  -ef <encrypted_data_file> 				encrypted filename (+location)",
+			"  -df <decrypted_data_file>				decrypted filename (+location)",
 			"",
 			"USAGE:",
 			"  gopass [-h|--help]",
+			"  gopass [-v|--version]",
 			"",
 			"  > Generate 32-bytes secret key",
 			"  $ gopass [-g|--generate]",
@@ -103,6 +107,14 @@ func checkArgs() (string, string, string, string) {
 }
 
 func main() {
+
+	if appVersion {
+		ShowBanner()
+		fmt.Println()
+		fmt.Println(color.Format(color.GREEN, fmt.Sprintf("Current version: %s", version)))
+		os.Exit(0)
+	}
+
 	if generate {
 		secret, err := Generate256BitSecret()
 		if err != nil {

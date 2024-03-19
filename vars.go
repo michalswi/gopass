@@ -5,13 +5,14 @@ import (
 	"os"
 )
 
-var version = "v0.2.0"
+var version = "v0.2.1"
 
 var (
+	generate            bool
+	appVersion          bool
 	encFile, decFile    string
 	encrypt, decrypt    string
 	secretKey, dataFile string
-	generate            bool
 )
 
 var logger = log.New(os.Stdout, "gopass ", log.LstdFlags|log.Lshortfile|log.Ltime|log.LUTC)
