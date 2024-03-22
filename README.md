@@ -8,6 +8,7 @@
 
 Simple go data/password encryptor.
 
+
 ### \# requirements
 
 **go** in version **1.22**
@@ -21,6 +22,9 @@ Simple go data/password encryptor.
 go install -v github.com/michalswi/gopass@latest
 ```
 
+You can also get `macos` or `linux` binary from [releases](https://github.com/michalswi/gopass/releases).
+
+
 ### \# usage
 
 This will display help for the tool.
@@ -28,6 +32,7 @@ This will display help for the tool.
 ```
 gopass -h
 ```
+
 
 ### \# example
 ```
@@ -82,6 +87,7 @@ Thu Mar 14 12:44:18 CET 2024
 Thu Mar 14 12:44:19 CET 2024
 Thu Mar 14 12:44:19 CET 2024
 ```
+
 
 ### \# warning
 
