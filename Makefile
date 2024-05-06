@@ -1,5 +1,7 @@
 GOLANG_VERSION := 1.22.1
-APP_VERSION := 0.2.1
+
+APP_NAME := gopass
+APP_VERSION := 0.2.2
 
 .DEFAULT_GOAL := help
 .PHONY: build_mac build_linux
@@ -9,9 +11,13 @@ help:
 	{ printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
 
 build_mac: ## Build for mac
-	CGO_ENABLED=0 go build -a -ldflags "-s -w -X 'main.Version=v$(APP_VERSION)'" -o gopass_macos_arm64
-	sha256sum gopass_macos_arm64 > gopass_macos_arm64.sha256
+	CGO_ENABLED=0 go build -a \
+	-ldflags "-s -w -X 'main.Version=v$(APP_VERSION)'" \
+	-o $(APP_NAME)_macos_arm64
+	sha256sum $(APP_NAME)_macos_arm64 > $(APP_NAME)_macos_arm64.sha256
 	
 build_linux: ## Build for linux
-	GOOS=linux GOARCH=amd64 go build -a -ldflags "-s -w -X 'main.Version=v$(APP_VERSION)'" -o gopass_linux_amd64
-	sha256sum gopass_linux_amd64 > gopass_linux_amd64.sha256
+	GOOS=linux GOARCH=amd64 go build -a \
+	-ldflags "-s -w -X 'main.Version=v$(APP_VERSION)'" \
+	-o $(APP_NAME)_linux_amd64
+	sha256sum $(APP_NAME)_linux_amd64 > $(APP_NAME)_linux_amd64.sha256
