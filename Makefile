@@ -1,7 +1,7 @@
-GOLANG_VERSION := 1.22.1
+GOLANG_VERSION := 1.23.2
 
 APP_NAME := gopass
-APP_VERSION := 0.2.2
+APP_VERSION := 0.3.1 # update 'vars.go'
 
 .DEFAULT_GOAL := help
 .PHONY: build_mac build_linux

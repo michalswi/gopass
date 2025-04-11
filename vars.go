@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-var version = "v0.2.2"
+var version = "v0.3.1"
 
 var (
 	generate            bool

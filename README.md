@@ -11,12 +11,12 @@ Simple go data/password encryptor.
 
 ### \# requirements
 
-**go** in version **1.22**
+**go** in version **1.23.2**
 
 
 ### \# installation
 
-`gopass` requires go1.22 to install successfully.
+`gopass` requires go1.23.2 to install successfully.
 
 ```
 go install -v github.com/michalswi/gopass@latest
@@ -47,24 +47,24 @@ Thu Mar 14 12:44:19 CET 2024
 
 # generate secret key
 
-$ gopass -g
+$ ./gopass -g
 
 ┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐
 │ ┬│ │├─┘├─┤└─┐└─┐
 └─┘└─┘┴  ┴ ┴└─┘└─┘
-	v0.1.0 - @michalswi
+        v0.3.1 - @michalswi
 
-secret: r10jNonOY5gHOESvbig1Wpkb5baSoKyZ
+secret: mZLbpOORzppLSOirl6KBnqUGQ56jJI1f
 
 
 # encrypt data
 
-$ gopass -e r10jNonOY5gHOESvbig1Wpkb5baSoKyZ data.txt
+$ ./gopass -e mZLbpOORzppLSOirl6KBnqUGQ56jJI1f data.txt
 
 ┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐
 │ ┬│ │├─┘├─┤└─┐└─┐
 └─┘└─┘┴  ┴ ┴└─┘└─┘
-	v0.1.0 - @michalswi
+        v0.3.1 - @michalswi
 
 Encrypting data.
 Encrypted file: 'encrypted.dat'.
@@ -72,12 +72,12 @@ Encrypted file: 'encrypted.dat'.
 
 # decrypt data
 
-$ gopass -d r10jNonOY5gHOESvbig1Wpkb5baSoKyZ encrypted.dat
+$ ./gopass -d mZLbpOORzppLSOirl6KBnqUGQ56jJI1f encrypted.dat
 
 ┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐
 │ ┬│ │├─┘├─┤└─┐└─┐
 └─┘└─┘┴  ┴ ┴└─┘└─┘
-	v0.1.0 - @michalswi
+        v0.3.1 - @michalswi
 
 Decrypting data.
 Decrypted file: 'decrypted.dat'.
