@@ -7,15 +7,24 @@ import (
 	"crypto/rand"
 	"crypto/sha256"
 	"errors"
+	"fmt"
 	"io"
 )
 
-// EncryptAES encrypts a message using AES-CFB with a random IV and appends an HMAC-SHA256.
-// The output format is: [IV (16 bytes) || ciphertext || HMAC (32 bytes)].
-func EncryptAES(key, message []byte) ([]byte, error) {
+const (
+	KeySize = 32 // AES-256 key size
+)
 
-	if len(key) != 32 {
-		return nil, errors.New("invalid key length: must be 32 bytes")
+// EncryptAES encrypts a message using AES-256-CFB with a random IV and appends an HMAC-SHA256.
+// Security properties:
+// - Confidentiality: AES-256 in CFB mode
+// - Integrity: HMAC-SHA256
+// - IV: Random 16 bytes prepended to ciphertext
+// - Key requirements: 32 bytes (256 bits) for both AES and HMAC
+// The output format is: [IV (16 bytes) || ciphertext || HMAC (32 bytes)]
+func EncryptAES(key, message []byte) ([]byte, error) {
+	if len(key) != KeySize {
+		return nil, fmt.Errorf("invalid key length: must be %d bytes", KeySize)
 	}
 
 	// Initialize block cipher
@@ -55,9 +64,8 @@ func EncryptAES(key, message []byte) ([]byte, error) {
 // DecryptAES decrypts a message encrypted by EncryptAES and verifies its HMAC.
 // It expects the input format: [IV (16 bytes) || ciphertext || HMAC (32 bytes)].
 func DecryptAES(key, cipherText []byte) ([]byte, error) {
-
-	if len(key) != 32 {
-		return nil, errors.New("invalid key length: must be 32 bytes")
+	if len(key) != KeySize {
+		return nil, fmt.Errorf("invalid key length: must be %d bytes", KeySize)
 	}
 
 	if len(cipherText) < aes.BlockSize+sha256.Size {

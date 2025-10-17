@@ -6,17 +6,15 @@
 ![](https://img.shields.io/github/last-commit/michalswi/gopass)
 ![](https://img.shields.io/github/release/michalswi/gopass)
 
-Simple go data/password encryptor.
+GO data/password encryptor.
 
 
 ### \# requirements
 
-**go** in version **1.23.2**
+**go** in version **1.25.3**
 
 
 ### \# installation
-
-`gopass` requires go1.23.2 to install successfully.
 
 ```
 go install -v github.com/michalswi/gopass@latest
@@ -40,9 +38,9 @@ gopass -h
 
 $ date >> data.txt
 $ cat data.txt
-Thu Mar 14 12:44:18 CET 2024
-Thu Mar 14 12:44:19 CET 2024
-Thu Mar 14 12:44:19 CET 2024
+Fri Oct 17 18:26:48 CEST 2025
+Fri Oct 17 18:26:49 CEST 2025
+Fri Oct 17 18:26:49 CEST 2025
 
 
 # generate secret key
@@ -52,7 +50,7 @@ $ ./gopass -g
 ┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐
 │ ┬│ │├─┘├─┤└─┐└─┐
 └─┘└─┘┴  ┴ ┴└─┘└─┘
-        v0.3.1 - @michalswi
+        v0.4.1 - @michalswi
 
 secret: mZLbpOORzppLSOirl6KBnqUGQ56jJI1f
 
@@ -64,7 +62,7 @@ $ ./gopass -e mZLbpOORzppLSOirl6KBnqUGQ56jJI1f data.txt
 ┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐
 │ ┬│ │├─┘├─┤└─┐└─┐
 └─┘└─┘┴  ┴ ┴└─┘└─┘
-        v0.3.1 - @michalswi
+        v0.4.1 - @michalswi
 
 Encrypting data.
 Encrypted file: 'encrypted.dat'.
@@ -77,15 +75,15 @@ $ ./gopass -d mZLbpOORzppLSOirl6KBnqUGQ56jJI1f encrypted.dat
 ┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐
 │ ┬│ │├─┘├─┤└─┐└─┐
 └─┘└─┘┴  ┴ ┴└─┘└─┘
-        v0.3.1 - @michalswi
+        v0.4.1 - @michalswi
 
 Decrypting data.
 Decrypted file: 'decrypted.dat'.
 
 $ cat decrypted.dat
-Thu Mar 14 12:44:18 CET 2024
-Thu Mar 14 12:44:19 CET 2024
-Thu Mar 14 12:44:19 CET 2024
+Fri Oct 17 18:26:48 CEST 2025
+Fri Oct 17 18:26:49 CEST 2025
+Fri Oct 17 18:26:49 CEST 2025
 ```
 
 
