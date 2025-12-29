@@ -109,9 +109,7 @@ func checkArgs() (string, string, string, string) {
 func main() {
 
 	if appVersion {
-		ShowBanner()
-		fmt.Println()
-		fmt.Println(color.Format(color.GREEN, fmt.Sprintf("Current version: %s", version)))
+		fmt.Println(color.Format(color.GREEN, version))
 		os.Exit(0)
 	}
 

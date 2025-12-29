@@ -11,7 +11,7 @@ GO data/password encryptor.
 
 ### \# requirements
 
-**go** in version **1.25.3**
+**go** in version **1.25.5**
 
 
 ### \# installation
@@ -23,12 +23,10 @@ go install -v github.com/michalswi/gopass@latest
 You can also get `macos` or `linux` binary from [releases](https://github.com/michalswi/gopass/releases).
 
 
-### \# usage
-
-This will display help for the tool.
+### \# help
 
 ```
-gopass -h
+$ ./gopass -h
 ```
 
 
@@ -50,9 +48,12 @@ $ ./gopass -g
 ┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐
 │ ┬│ │├─┘├─┤└─┐└─┐
 └─┘└─┘┴  ┴ ┴└─┘└─┘
-        v0.4.1 - @michalswi
+        v0.5.1 - @michalswi
 
 secret: mZLbpOORzppLSOirl6KBnqUGQ56jJI1f
+
+$ echo -n bU4pXpiQDbSXLb3jN7mV+41VkBDoBAPB | wc -c
+32
 
 
 # encrypt data
@@ -62,7 +63,7 @@ $ ./gopass -e mZLbpOORzppLSOirl6KBnqUGQ56jJI1f data.txt
 ┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐
 │ ┬│ │├─┘├─┤└─┐└─┐
 └─┘└─┘┴  ┴ ┴└─┘└─┘
-        v0.4.1 - @michalswi
+        v0.5.1 - @michalswi
 
 Encrypting data.
 Encrypted file: 'encrypted.dat'.
@@ -75,7 +76,7 @@ $ ./gopass -d mZLbpOORzppLSOirl6KBnqUGQ56jJI1f encrypted.dat
 ┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐
 │ ┬│ │├─┘├─┤└─┐└─┐
 └─┘└─┘┴  ┴ ┴└─┘└─┘
-        v0.4.1 - @michalswi
+        v0.5.1 - @michalswi
 
 Decrypting data.
 Decrypted file: 'decrypted.dat'.
