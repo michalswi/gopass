@@ -12,7 +12,10 @@ import (
 )
 
 const (
-	KeySize = 32 // AES-256 key size
+	// KeySize is the required key length for AES-256/HMAC (in bytes).
+	KeySize = 32
+	// HMACSize is the output size of HMAC-SHA256 (in bytes).
+	HMACSize = sha256.Size
 )
 
 // EncryptAES encrypts a message using AES-256-CFB with a random IV and appends an HMAC-SHA256.
@@ -68,7 +71,7 @@ func DecryptAES(key, cipherText []byte) ([]byte, error) {
 		return nil, fmt.Errorf("invalid key length: must be %d bytes", KeySize)
 	}
 
-	if len(cipherText) < aes.BlockSize+sha256.Size {
+	if len(cipherText) < aes.BlockSize+HMACSize {
 		return nil, errors.New("ciphertext too short: must include IV and HMAC")
 	}
 
@@ -79,9 +82,8 @@ func DecryptAES(key, cipherText []byte) ([]byte, error) {
 	}
 
 	// Separate the HMAC from the ciphertext
-	hmacSize := sha256.Size
-	msgHMAC := cipherText[len(cipherText)-hmacSize:]
-	cipherText = cipherText[:len(cipherText)-hmacSize]
+	msgHMAC := cipherText[len(cipherText)-HMACSize:]
+	cipherText = cipherText[:len(cipherText)-HMACSize]
 
 	// Verify the HMAC to ensure the integrity of
 	// the IV and ciphertext.
