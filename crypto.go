@@ -3,106 +3,69 @@ package main
 import (
 	"crypto/aes"
 	"crypto/cipher"
-	"crypto/hmac"
 	"crypto/rand"
-	"crypto/sha256"
 	"errors"
 	"fmt"
 	"io"
 )
 
 const (
-	// KeySize is the required key length for AES-256/HMAC (in bytes).
-	KeySize = 32
-	// HMACSize is the output size of HMAC-SHA256 (in bytes).
-	HMACSize = sha256.Size
+	KeySize   = 32 // AES-256 key size
+	NonceSize = 12 // Standard GCM nonce size to keep output stable
 )
 
-// EncryptAES encrypts a message using AES-256-CFB with a random IV and appends an HMAC-SHA256.
-// Security properties:
-// - Confidentiality: AES-256 in CFB mode
-// - Integrity: HMAC-SHA256
-// - IV: Random 16 bytes prepended to ciphertext
-// - Key requirements: 32 bytes (256 bits) for both AES and HMAC
-// The output format is: [IV (16 bytes) || ciphertext || HMAC (32 bytes)]
+// EncryptAES encrypts a message using AES-256-GCM AEAD (authenticated encryption).
+// Output format: [nonce || ciphertext || tag]
 func EncryptAES(key, message []byte) ([]byte, error) {
 	if len(key) != KeySize {
 		return nil, fmt.Errorf("invalid key length: must be %d bytes", KeySize)
 	}
 
-	// Initialize block cipher
 	block, err := aes.NewCipher(key)
 	if err != nil {
 		return nil, err
 	}
 
-	// Generate the Initialization Vector (IV),
-	// which will be prepended to the ciphertext
-	// in the final output.
-	iv := make([]byte, aes.BlockSize)
-	_, err = io.ReadFull(rand.Reader, iv)
+	aead, err := cipher.NewGCMWithNonceSize(block, NonceSize)
 	if err != nil {
 		return nil, err
 	}
 
-	// Create the AES cipher stream
-	cfb := cipher.NewCFBEncrypter(block, iv)
-	// Create the byte slice that will hold encrypted message
-	cipherText := make([]byte, len(message))
-	cfb.XORKeyStream(cipherText, message)
+	nonce := make([]byte, NonceSize)
+	if _, err := io.ReadFull(rand.Reader, nonce); err != nil {
+		return nil, err
+	}
 
-	// Create a new HMAC
-	h := hmac.New(sha256.New, key)
-	// Write the IV nonce to the HMAC
-	h.Write(iv)
-	// Write the ciphertext to the HMAC
-	h.Write(cipherText)
-	// Append the HMAC to the IV and ciphertext to form
-	// the final output: [IV || ciphertext || HMAC].
-	mac := h.Sum(nil)
+	sealed := aead.Seal(make([]byte, 0, len(message)+aead.Overhead()), nonce, message, nil)
 
-	return append(append(iv, cipherText...), mac...), nil
+	out := make([]byte, 0, NonceSize+len(sealed))
+	out = append(out, nonce...)
+	out = append(out, sealed...)
+	return out, nil
 }
 
-// DecryptAES decrypts a message encrypted by EncryptAES and verifies its HMAC.
-// It expects the input format: [IV (16 bytes) || ciphertext || HMAC (32 bytes)].
+// DecryptAES decrypts data produced by EncryptAES and verifies its authenticity.
 func DecryptAES(key, cipherText []byte) ([]byte, error) {
 	if len(key) != KeySize {
 		return nil, fmt.Errorf("invalid key length: must be %d bytes", KeySize)
 	}
 
-	if len(cipherText) < aes.BlockSize+HMACSize {
-		return nil, errors.New("ciphertext too short: must include IV and HMAC")
-	}
-
-	// Initialize block cipher
 	block, err := aes.NewCipher(key)
 	if err != nil {
 		return nil, err
 	}
 
-	// Separate the HMAC from the ciphertext
-	msgHMAC := cipherText[len(cipherText)-HMACSize:]
-	cipherText = cipherText[:len(cipherText)-HMACSize]
-
-	// Verify the HMAC to ensure the integrity of
-	// the IV and ciphertext.
-	h := hmac.New(sha256.New, key)
-	h.Write(cipherText) // Includes IV and ciphertext
-	expectedHMAC := h.Sum(nil)
-	if !hmac.Equal(msgHMAC, expectedHMAC) {
-		return nil, errors.New("HMAC verification failed")
+	aead, err := cipher.NewGCMWithNonceSize(block, NonceSize)
+	if err != nil {
+		return nil, err
 	}
 
-	// Separate the IV from the ciphertext and use it
-	// to initialize the decryption process.
-	iv := cipherText[:aes.BlockSize]
-	cipherText = cipherText[aes.BlockSize:]
+	if len(cipherText) < NonceSize+aead.Overhead() {
+		return nil, errors.New("ciphertext too short: missing nonce or tag")
+	}
 
-	// Decrypt the message using the CFB block mode
-	cfb := cipher.NewCFBDecrypter(block, iv)
-	plainText := make([]byte, len(cipherText))
-	cfb.XORKeyStream(plainText, cipherText)
+	nonce := cipherText[:NonceSize]
+	sealed := cipherText[NonceSize:]
 
-	return plainText, nil
+	return aead.Open(nil, nonce, sealed, nil)
 }
