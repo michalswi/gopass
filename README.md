@@ -48,11 +48,11 @@ $ ./gopass -g
 ┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐
 │ ┬│ │├─┘├─┤└─┐└─┐
 └─┘└─┘┴  ┴ ┴└─┘└─┘
-        v0.5.1 - @michalswi
+        v0.5.2 - @michalswi
 
 secret: mZLbpOORzppLSOirl6KBnqUGQ56jJI1f
 
-$ echo -n bU4pXpiQDbSXLb3jN7mV+41VkBDoBAPB | wc -c
+$ printf %s 'mZLbpOORzppLSOirl6KBnqUGQ56jJI1f' | wc -c
 32
 
 
@@ -63,7 +63,7 @@ $ ./gopass -e mZLbpOORzppLSOirl6KBnqUGQ56jJI1f data.txt
 ┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐
 │ ┬│ │├─┘├─┤└─┐└─┐
 └─┘└─┘┴  ┴ ┴└─┘└─┘
-        v0.5.1 - @michalswi
+        v0.5.2 - @michalswi
 
 Encrypting data.
 Encrypted file: 'encrypted.dat'.
@@ -76,7 +76,7 @@ $ ./gopass -d mZLbpOORzppLSOirl6KBnqUGQ56jJI1f encrypted.dat
 ┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐
 │ ┬│ │├─┘├─┤└─┐└─┐
 └─┘└─┘┴  ┴ ┴└─┘└─┘
-        v0.5.1 - @michalswi
+        v0.5.2 - @michalswi
 
 Decrypting data.
 Decrypted file: 'decrypted.dat'.

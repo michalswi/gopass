@@ -1,7 +1,7 @@
 GOLANG_VERSION := 1.25.5
 
 APP_NAME := gopass
-APP_VERSION := 0.5.1 # update 'vars.go' + 'README.md'
+APP_VERSION := 0.5.2 # update 'vars.go' + 'README.md'
 
 .DEFAULT_GOAL := help
 .PHONY: build_mac build_linux
@@ -16,8 +16,14 @@ build_mac: ## Build for mac
 	-o $(APP_NAME)_macos_arm64
 	sha256sum $(APP_NAME)_macos_arm64 > $(APP_NAME)_macos_arm64.sha256
 	
-build_linux: ## Build for linux
+build_linux_amd64: ## Build for linux - amd64
 	GOOS=linux GOARCH=amd64 go build -a \
 	-ldflags "-s -w -X 'main.Version=v$(APP_VERSION)'" \
 	-o $(APP_NAME)_linux_amd64
 	sha256sum $(APP_NAME)_linux_amd64 > $(APP_NAME)_linux_amd64.sha256
+
+build_linux_arm64: ## Build for linux - arm64
+	GOOS=linux GOARCH=arm64 go build -a \
+	-ldflags "-s -w -X 'main.Version=v$(APP_VERSION)'" \
+	-o $(APP_NAME)_linux_arm64
+	sha256sum $(APP_NAME)_linux_arm64 > $(APP_NAME)_linux_arm64.sha256
